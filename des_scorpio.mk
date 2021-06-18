@@ -17,11 +17,11 @@
 # Inherit from scorpio device
 $(call inherit-product, device/xiaomi/scorpio/device.mk)
 
-# Inherit some common Lineage stuff.
-$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
+# Inherit some common descendant stuff.
+$(call inherit-product, vendor/descendant/config/common_full_phone.mk)
 
 # Device identifier. This must come after all inclusions
-PRODUCT_NAME := lineage_scorpio
+PRODUCT_NAME := des_scorpio
 PRODUCT_DEVICE := scorpio
 PRODUCT_BRAND := Xiaomi
 PRODUCT_MODEL := MI Note 2
