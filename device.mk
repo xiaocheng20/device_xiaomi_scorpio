@@ -66,11 +66,20 @@ PRODUCT_PACKAGES += \
 
 # Thermal
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/thermal-engine-8996.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-engine-8996.conf
+    $(LOCAL_PATH)/configs/thermal-engine-8996-lite.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-engine-8996-lite.conf \
+    $(LOCAL_PATH)/configs/thermal-engine-8996.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-engine-8996.conf \
+    $(LOCAL_PATH)/configs/thermal-engine-8996_gaming.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-engine-8996_gaming.conf \
+    $(LOCAL_PATH)/configs/thermal-engine-8996_battery.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-engine-8996_battery.conf
 
 #Qcom Support
 PRODUCT_BOARD_PLATFORM := msm8996
 PRODUCT_USES_QCOM_HARDWARE := true
 
+# Jerry Kernel Profiles
+PRODUCT_PACKAGES += \
+    init.Jerry.rc \
+    init.spectrum.rc \
+    init.spectrum.sh
+    
 # Inherit from msm8996-common
 $(call inherit-product, device/xiaomi/msm8996-common/msm8996.mk)
