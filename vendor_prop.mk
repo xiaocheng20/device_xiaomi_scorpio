@@ -23,3 +23,25 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Sensors
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.qti.sensors.touch_taptap=true
+    
+# Properties
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.config.fha_enable=true \
+    ro.sys.fw.bg_apps_limit=32 \
+    ro.config.dha_cached_max=16 \
+    ro.config.dha_empty_max=42 \
+    ro.config.dha_empty_init=32 \
+    ro.config.dha_lmk_scale=0.545 \
+    ro.config.dha_th_rate=2.3 \
+    ro.config.sdha_apps_bg_max=64 \
+    ro.config.sdha_apps_bg_min=8
+
+# JerryMods
+PRODUCT_PROPERTY_OVERRIDES += \
+  dalvik.vm.boot-dex2oat-threads=4 \
+  dalvik.vm.dex2oat-threads=4 \
+  dalvik.vm.image-dex2oat-threads=4 \
+  debug.generate-debug-info=false \
+  ro.sys.sdcardfs=true \
+  persist.vendor.qti.inputopts.enable=true \
+  persist.vendor.qti.inputopts.movetouchslop=0.6

@@ -1,0 +1,200 @@
+#
+# 老鼠mod(Special thanks @movzx)
+# 
+#
+# 
+#
+
+on boot
+    # Set CPU Parameters
+        # Disable thermal hotplug to switch governor
+            write /sys/module/msm_thermal/core_control/enabled 0
+        #
+        # Set online all CPUs
+            write /sys/devices/system/cpu/cpu0/online 1
+            write /sys/devices/system/cpu/cpu1/online 1
+            write /sys/devices/system/cpu/cpu2/online 1
+            write /sys/devices/system/cpu/cpu3/online 1
+        #
+        # Little
+            chmod 777 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+            chmod 777 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+            write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 2188800
+            write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 307200
+            # Performance
+                chmod 777 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+                write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor performance
+        # Big
+            chmod 777 /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq
+            chmod 777 /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq
+            write /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq 2342400
+            write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 307200
+            # Performance
+                chmod 777 /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor
+                write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor performance
+
+on Jerry
+    # Set CPU Parameters
+        # Disable thermal hotplug to switch governor
+            write /sys/module/msm_thermal/core_control/enabled 0
+        #
+        # Little
+            chmod 777 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+            chmod 777 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+            write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 2188800
+            write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 307200
+            # SchedUtil
+                chmod 777 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+                write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor schedutil
+                chmod 777 /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us
+                chmod 777 /sys/devices/system/cpu/cpu0/cpufreq/schedutil/iowait_boost_enable
+                chmod 777 /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us
+                write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us 20000
+                write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/iowait_boost_enable 1
+                write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us 500
+        # Big
+            chmod 777 /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq
+            chmod 777 /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq
+            write /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq 2342400
+            write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 307200
+            # SchedUtil
+                chmod 777 /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor
+                write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor schedutil
+                chmod 777 /sys/devices/system/cpu/cpu2/cpufreq/schedutil/down_rate_limit_us
+                chmod 777 /sys/devices/system/cpu/cpu2/cpufreq/schedutil/iowait_boost_enable
+                chmod 777 /sys/devices/system/cpu/cpu2/cpufreq/schedutil/up_rate_limit_us
+                write /sys/devices/system/cpu/cpu2/cpufreq/schedutil/down_rate_limit_us 20000
+                write /sys/devices/system/cpu/cpu2/cpufreq/schedutil/iowait_boost_enable 1
+                write /sys/devices/system/cpu/cpu2/cpufreq/schedutil/up_rate_limit_us 500
+    #
+    # CPU Boost
+        write /sys/module/cpu_boost/parameters/dynamic_stune_boost_rt 50
+        write /sys/module/cpu_boost/parameters/dynamic_stune_boost_top_app 30
+        write /sys/module/cpu_boost/parameters/input_boost_enabled 1
+        write /sys/module/cpu_boost/parameters/input_boost_freq "0:960000 1:960000 2:1248000 3:1248000"
+        write /sys/module/cpu_boost/parameters/input_boost_ms 1500
+        write /sys/module/cpu_boost/parameters/dynamic_stune_boost 20
+        write /sys/module/cpu_input_boost/parameters/input_boost_duration 1500
+        write /sys/module/cpu_input_boost/parameters/input_boost_freq_hp 1248000
+        write /sys/module/cpu_input_boost/parameters/input_boost_freq_lp 960000
+    #
+    # Dynamic SchedTune Boost
+        write /dev/stune/foreground/schedtune.sched_boost 20
+        write /dev/stune/rt/schedtune.sched_boost 50
+        write /dev/stune/rt/schedtune.boost 50
+        write /dev/stune/schedtune.sched_boost 20
+        write /dev/stune/top-app/schedtune.sched_boost 30
+    #
+    # DevFreq
+        write /sys/class/devfreq/soc:qcom,cpubw/bw_hwmon/mbps_zones "4173 5195 11863 13763"
+        write /sys/class/devfreq/soc:qcom,cpubw/governor "cpufreq"
+        write /sys/class/devfreq/soc:qcom,cpubw/min_freq 13763
+        write /sys/class/devfreq/soc:qcom,memlat-cpu0/governor "powersave"
+        write /sys/class/devfreq/soc:qcom,memlat-cpu2/governor "powersave"
+        write /sys/class/devfreq/soc:qcom,mincpubw/governor "cpufreq"
+    #
+    # Set Adreno GPU
+        chmod 777 /sys/class/kgsl/kgsl-3d0/devfreq/max_freq
+        chmod 777 /sys/class/kgsl/kgsl-3d0/devfreq/min_freq
+        write /sys/class/kgsl/kgsl-3d0/devfreq/max_freq 624000000
+        write /sys/class/kgsl/kgsl-3d0/devfreq/min_freq 133000000
+    #
+    # Set LMK
+        write /sys/module/lowmemorykiller/parameters/debug_level 0
+        write /sys/module/lowmemorykiller/parameters/minfree "18432,23040,27648,80640,110592,131072"
+    #
+    # VM Tweaks
+        write /proc/sys/vm/dirty_background_ratio 70
+        write /proc/sys/vm/dirty_ratio 90
+        write /proc/sys/vm/extra_free_kbytes 24300
+        write /proc/sys/vm/min_free_kbytes 4096
+        write /proc/sys/vm/oom_kill_allocating_task 0
+        write /proc/sys/vm/overcommit_ratio 80
+        write /proc/sys/vm/swappiness 60
+        write /proc/sys/vm/vfs_cache_pressure 100
+    #
+    # Set I/O Scheduler
+        setprop sys.io.scheduler cfq
+        # SDA
+            write /sys/block/sda/queue/add_random 0
+            write /sys/block/sda/queue/iostats 0
+            write /sys/block/sda/queue/read_ahead_kb 128
+            write /sys/block/sda/queue/scheduler cfq
+        # SDE
+            write /sys/block/sde/queue/add_random 0
+            write /sys/block/sde/queue/iostats 0
+            write /sys/block/sde/queue/read_ahead_kb 128
+            write /sys/block/sde/queue/scheduler cfq
+        # DM-0
+            write /sys/block/dm-0/queue/add_random 0
+            write /sys/block/dm-0/queue/iostats 0
+            write /sys/block/dm-0/queue/read_ahead_kb 128
+            write /sys/block/dm-0/queue/scheduler cfq
+    #
+    # SCSI Tweaks
+        write /sys/module/scsi_mod/parameters/use_blk_mq Y
+    #
+    # Misc Tweaks
+        write /sys/devices/soc/soc:fpc_fpc1020/enable_wakeup 1
+        chmod 777 /sys/module/sync/parameters/fsync_enabled
+        chmod 777 /sys/module/workqueue/parameters/power_efficient
+        write /sys/module/msm_thermal/parameters/enabled N
+        write /sys/module/sync/parameters/fsync_enabled N
+        write /sys/module/workqueue/parameters/power_efficient Y
+    #
+    # Some Mods from Morpo Tweaks
+        write /proc/sys/debug/exception-trace 0
+        write /sys/devices/system/edac/cpu/log_ce 0
+        write /sys/devices/system/edac/cpu/log_ue 0
+        write /sys/kernel/printk_mode/printk_mode 0
+        write /sys/module/alarm/parameters/debug_mask 0
+        write /sys/module/alarm_dev/parameters/debug_mask 0
+        write /sys/module/binder/parameters/debug_mask 0
+        write /sys/module/binder/parameters/debug_mask 0
+        write /sys/module/bluetooth/parameters/disable_ertm Y
+        write /sys/module/bluetooth/parameters/disable_esco Y
+        write /sys/module/debug/parameters/enable_event_log 0
+        write /sys/module/dwc3/parameters/ep_addr_rxdbg_mask 0 
+        write /sys/module/dwc3/parameters/ep_addr_txdbg_mask 0
+        write /sys/module/earlysuspend/parameters/debug_mask 0
+        write /sys/module/edac_core/parameters/edac_mc_log_ce 0
+        write /sys/module/edac_core/parameters/edac_mc_log_ue 0
+        write /sys/module/glink/parameters/debug_mask 0
+        write /sys/module/hid_apple/parameters/fnmode 0
+        write /sys/module/hid_magicmouse/parameters/emulate_3button N
+        write /sys/module/hid_magicmouse/parameters/emulate_scroll_wheel N
+        write /sys/module/ip6_tunnel/parameters/log_ecn_error N
+        write /sys/module/lowmemorykiller/parameters/debug_level 0
+        write /sys/module/msm_show_resume_irq/parameters/debug_mask 0
+        write /sys/module/msm_smd/parameters/debug_mask 0
+        write /sys/module/msm_smem/parameters/debug_mask 0 
+        write /sys/module/otg_wakelock/parameters/enabled N 
+        write /sys/module/printk/parameters/console_suspend Y
+        write /sys/module/service_locator/parameters/enable 0 
+        write /sys/module/sit/parameters/log_ecn_error N
+        write /sys/module/smb135x_charger/parameters/use_wlock N
+        write /sys/module/smb135x_charger/parameters/use_wlock N
+        write /sys/module/smem_log/parameters/log_enable 0
+        write /sys/module/smp2p/parameters/debug_mask 0
+        write /sys/module/sync/parameters/fsync_enabled N
+        write /sys/module/touch_core_base/parameters/debug_mask 0
+        write /sys/module/usb_bam/parameters/enable_event_log 0
+        write /sys/module/xhci_hcd/parameters/wl_divide N
+    #
+    # Thermal Configs
+        setprop sys.qcom.thermalcfg /vendor/etc/thermal-engine-8996.conf
+        stop thermal-engine
+        start thermal-engine
+    #
+    # Jerry Mods
+        setprop dalvik.vm.dex2oat-threads 4
+        setprop dalvik.vm.image-dex2oat-threads 4
+        setprop debug.generate-debug-info false
+        setprop ro.data.large_tcp_window_size true
+        setprop ro.sys.fw.dex2oat_thread_count 4
+        setprop ro.sys.sdcardfs true
+        setprop sys.use_fifo_ui 1
+        setprop wifi.supplicant_scan_interval 3600
+
+on property:dev.bootcomplete=1
+       trigger Jerry
