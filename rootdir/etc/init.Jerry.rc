@@ -68,6 +68,10 @@ on Jerry
                 write /sys/devices/system/cpu/cpu2/cpufreq/schedutil/up_rate_limit_us 500
     #
     # CPU Boost
+    	chmod 777 /sys/module/cpu_boost/parameters/dynamic_stune_boost_rt
+    	chmod 777 /sys/module/cpu_boost/parameters/dynamic_stune_boost_top_app
+    	chmod 777 /sys/module/cpu_boost/parameters/input_boost_enabled
+    	chmod 777 /sys/module/cpu_boost/parameters/input_boost_freq
         write /sys/module/cpu_boost/parameters/dynamic_stune_boost_rt 50
         write /sys/module/cpu_boost/parameters/dynamic_stune_boost_top_app 30
         write /sys/module/cpu_boost/parameters/input_boost_enabled 1
@@ -79,6 +83,9 @@ on Jerry
         write /sys/module/cpu_input_boost/parameters/input_boost_freq_lp 960000
     #
     # Dynamic SchedTune Boost
+    	chmod 777 /dev/stune/rt/schedtune.sched_boost
+    	chmod 777 /dev/stune/rt/schedtune.boost
+    	chmod 777 /dev/stune/schedtune.sched_boost
         write /dev/stune/foreground/schedtune.sched_boost 20
         write /dev/stune/rt/schedtune.sched_boost 50
         write /dev/stune/rt/schedtune.boost 50
@@ -104,6 +111,9 @@ on Jerry
         write /sys/module/lowmemorykiller/parameters/minfree "18432,23040,27648,80640,110592,131072"
     #
     # VM Tweaks
+    	chmod 777 /proc/sys/vm/dirty_background_ratio
+    	chmod 777 /proc/sys/vm/dirty_ratio
+    	chmod 777 /proc/sys/vm/extra_free_kbytes
         write /proc/sys/vm/dirty_background_ratio 70
         write /proc/sys/vm/dirty_ratio 90
         write /proc/sys/vm/extra_free_kbytes 24300

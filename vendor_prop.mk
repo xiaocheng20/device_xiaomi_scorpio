@@ -45,3 +45,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
   ro.sys.sdcardfs=true \
   persist.vendor.qti.inputopts.enable=true \
   persist.vendor.qti.inputopts.movetouchslop=0.6
+  
+#Hal3
+PRODUCT_PROPERTY_OVERRIDES += \
+  persist.vendor.camera.HAL3.enabled=1  

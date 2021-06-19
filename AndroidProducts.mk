@@ -14,9 +14,9 @@
 # limitations under the License.
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/des_scorpio.mk
+    $(LOCAL_DIR)/descendant_scorpio.mk
 
 COMMON_LUNCH_CHOICES := \
-    des_scorpio-user \
-    des_scorpio-userdebug \
-    des_scorpio-eng
+    descendant_scorpio-user \
+    descendant_scorpio-userdebug \
+    descendant_scorpio-eng
